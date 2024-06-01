@@ -55,7 +55,6 @@ pipeline {
                 sh 'mvn package'
                 }
             }
-        }
         
          stage('Publish to Nexus') {
             steps {
@@ -104,5 +103,6 @@ pipeline {
                // }
           //  }
         }
+}
     
 
