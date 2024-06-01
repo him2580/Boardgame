@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('GIT checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/sagarkulkarni1989/Boardgame.git'
+                git branch: 'main', url: 'https://github.com/him2580/Boardgame.git'
             }
         }
         
@@ -68,7 +68,7 @@ pipeline {
                 script{
                     
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker build -t gita/boardshack:latest ."
+                        sh "docker build -t himanshu3010/boardshack:latest ."
                         
    
                     }
@@ -77,7 +77,7 @@ pipeline {
         }
         stage('DOcker Image Scan') {
             steps {
-                sh 'trivy image --format table -o trivy-fs-report.html gita/boardshack:latest'
+                sh 'trivy image --format table -o trivy-fs-report.html himanshu3010/boardshack:latest'
             }
         }
         
@@ -86,7 +86,7 @@ pipeline {
                 script{
                     
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push gita/boardshack:latest"
+                        sh "docker push himanshu3010/boardshack:latest"
                         
    
                     }
@@ -94,13 +94,13 @@ pipeline {
             }
         }
         
-        stage('deployment on k8s') {
-            steps {
-                withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId: 'k8s-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://15.207.113.247:6443') {
+    //      stage('deployment on k8s') {
+          //  steps {
+              //  withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId: 'k8s-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://15.207.113.247:6443') {
                   
-                   sh "kubectl apply -f deployment-service.yaml"
-                }
-            }
+               //    sh "kubectl apply -f deployment-service.yaml"
+               // }
+          //  }
         }
         
         
